@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sparsh Bhatt – Dev Hub</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: #1a1a25;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+            --accent: #6366f1;
+            --accent-hover: #818cf8;
+            --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            --card-hover-shadow: 0 12px 48px rgba(99, 102, 241, 0.3);
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #f5f5f7;
+            --bg-secondary: #ffffff;
+            --bg-card: #ffffff;
+            --text-primary: #1a1a2e;
+            --text-secondary: #6b7280;
+            --accent: #6366f1;
+            --accent-hover: #4f46e5;
+            --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --card-hover-shadow: 0 8px 32px rgba(99, 102, 241, 0.2);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            padding: 3rem 0;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--accent), #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .theme-toggle {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            background: var(--bg-card);
+            border: 2px solid var(--accent);
+            color: var(--text-primary);
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: var(--card-shadow);
+        }
+
+        .theme-toggle:hover {
+            background: var(--accent);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        /* Project Cards Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem 0;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(99, 102, 241, 0.1);
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--card-hover-shadow);
+            border-color: rgba(99, 102, 241, 0.3);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .card-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+
+        .go-button {
+            background: linear-gradient(135deg, var(--accent), #a855f7);
+            color: white;
+            border: none;
+            padding: 0.875rem 2rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+        }
+
+        .go-button:hover:not(:disabled) {
+            transform: scale(1.08);
+            box-shadow: 0 6px 25px rgba(99, 102, 241, 0.6);
+        }
+
+        .go-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            background: linear-gradient(135deg, #6b7280, #9ca3af);
+        }
+
+        .go-button.coming-soon {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+        }
+
+        /* Blast Animation */
+        @keyframes blast {
+            0% {
+                transform: scale(1);
+            }
+            10% {
+                transform: scale(0.9) rotate(-5deg);
+            }
+            20% {
+                transform: scale(1.1) rotate(5deg);
+            }
+            30% {
+                transform: scale(0.85) rotate(-3deg);
+            }
+            40% {
+                transform: scale(1.15) rotate(3deg);
+            }
+            50% {
+                transform: scale(0.9) rotate(-2deg);
+                filter: brightness(1.5);
+            }
+            60% {
+                transform: scale(1.1) rotate(2deg);
+                filter: brightness(2);
+            }
+            70% {
+                transform: scale(0.95) rotate(-1deg);
+                filter: brightness(1.5);
+            }
+            80% {
+                transform: scale(1.05) rotate(1deg);
+            }
+            90% {
+                transform: scale(0.98);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .go-button.blasting {
+            animation: blast 0.2s ease-in-out 10;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem 0;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-link:hover {
+            color: var(--accent);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+            }
+
+            .theme-toggle {
+                position: static;
+                margin-top: 1rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 1rem;
+            }
+
+            header {
+                padding: 2rem 0;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body data-theme="dark">
+    <div class="container">
+        <header>
+            <h1>Sparsh Bhatt – Dev Hub</h1>
+            <p class="subtitle">One link to everything I've built</p>
+            <button class="theme-toggle" id="themeToggle">☀️ Light Mode</button>
+        </header>
+
+        <main class="projects-grid">
+            <!-- Card 1: Voxel Craft -->
+            <div class="card">
+                <h2 class="card-title">🎮 Voxel Craft</h2>
+                <p class="card-description">3D voxel game with Herobrine, crafting, and first-person controls.</p>
+                <button class="go-button" data-link="https://sparshminecraft.netlify.app">GO!</button>
+            </div>
+
+            <!-- Card 2: Racer Sparsh -->
+            <div class="card">
+                <h2 class="card-title">🏎️ Racer Sparsh</h2>
+                <p class="card-description">High-speed 3D racing game with jet mode, boost, and camera toggle.</p>
+                <button class="go-button" data-link="https://racersparsh.netlify.app">GO!</button>
+            </div>
+
+            <!-- Card 3: P2P Chat App -->
+            <div class="card">
+                <h2 class="card-title">💬 P2P Chat App</h2>
+                <p class="card-description">Real-time chat with multiple rooms and emoji picker.</p>
+                <button class="go-button" data-link="https://itssparshrockz13.github.io/realtimechat-p2p/">GO!</button>
+            </div>
+
+            <!-- Card 4: AI Code Generator -->
+            <div class="card">
+                <h2 class="card-title">🤖 AI Code Generator</h2>
+                <p class="card-description">Generate code with Groq API – under active development.</p>
+                <button class="go-button coming-soon" data-link="#" disabled>Coming Soon</button>
+            </div>
+
+            <!-- Card 5: Portfolio -->
+            <div class="card">
+                <h2 class="card-title">👤 Portfolio / About Me</h2>
+                <p class="card-description">My original portfolio and "Wanna Know About Me?" story.</p>
+                <button class="go-button" data-link="https://sparshfolio.netlify.app">GO!</button>
+            </div>
+        </main>
+
+        <footer>
+            <div class="footer-links">
+                <a href="https://github.com/ItsSparshRockz13" target="_blank" class="footer-link">
+                    📦 GitHub
+                </a>
+                <a href="mailto:sparshos4b@gmail.com" class="footer-link">
+                    📧 sparshos4b@gmail.com
+                </a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            body.setAttribute('data-theme', newTheme);
+            themeToggle.textContent = newTheme === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode';
+        });
+
+        // GO! Button Blast Animation + Redirect
+        const goButtons = document.querySelectorAll('.go-button:not([disabled])');
+
+        goButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const link = this.getAttribute('data-link');
+                
+                // Add blast animation
+                this.classList.add('blasting');
+                
+                // Disable button during animation
+                this.disabled = true;
+                this.textContent = '🚀';
+                
+                // Wait 2 seconds, then open link
+                setTimeout(() => {
+                    // Remove animation class
+                    this.classList.remove('blasting');
+                    
+                    // Re-enable button
+                    this.disabled = false;
+                    this.textContent = 'GO!';
+                    
+                    // Open link in new tab
+                    window.open(link, '_blank');
+                }, 2000);
+            });
+        });
+    </script>
+</body>
+</html>
